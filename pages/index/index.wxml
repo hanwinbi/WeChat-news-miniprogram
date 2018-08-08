@@ -1,7 +1,8 @@
+<!-- 以下 -->
 <view class="navbar">
   <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
 </view>
-<!-- <view class='bottom-navbar'></view> -->
+<!-- 以上内容来自CSDN -->
  
 <!--国内-->
 <view hidden="{{currentTab!==0}}">
