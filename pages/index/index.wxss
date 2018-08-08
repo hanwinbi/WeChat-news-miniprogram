@@ -50,7 +50,7 @@ page{
 }
 
 .box{
-  padding-top: 255rpx;
+  padding-top: 259rpx;
 }
 
 .news-content{
