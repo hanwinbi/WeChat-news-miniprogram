@@ -8,10 +8,11 @@ const newsTypeMap ={
   6 : 'other',
 }
 
+var util = require('../../utils/util.js');
 var app = getApp()
 Page({
   data: {
-    navbar: ['国内', '国际', '财经', '娱乐', '军事', '体育', '其他'],
+    newslist: ['国内', '国际', '财经', '娱乐', '军事', '体育', '其他'],
     currentTab: 0,
     length: 0,
     essay: [],
@@ -20,29 +21,39 @@ Page({
     head_source: '',
     head_date: '',
     head_firstImage:'',
+    default_img: '/images/default-img.png',
     newsType: 'gn',
   },
   onLoad() {
-    this.getMessage('gn')
+    this.getMessage()
   },
   onPullDownRefresh(){
-    this.getMessage(this.data.newsType)
-    wx.stopPullDownRefresh()
+    wx.showToast({
+      title: '新闻加载中...',
+      duration: 500
+    })
+    this.getMessage(() => {
+      wx.stopPullDownRefresh()
+    })
   },
 
   //获取新闻列表
-  getMessage(newstype) {
+  getMessage(callback) {
+    wx.showToast({
+      title: '新闻加载中...',
+      duration: 500
+    })
     wx.request({
       url: 'https://test-miniprogram.com/api/news/list',
       data: {
-        type: newstype,
+        type: this.data.newsType,
       },
       success: res => {
         let result = res.data
         this.getNews(result)
       },
       complete: () => {
-        
+        callback && callback() 
       }
     })
   },
@@ -66,25 +77,9 @@ Page({
     this.setData({
       newsType: newsType
     })
-    this.getMessage(newsType)
+    this.getMessage()
   },
-  //格式化时间
-  setTime(time){
-    time = time.toString()
-    let b = new Date(time)
-    if (b.getMinutes() < 10 || b.getHours() < 10 ){
-      if (b.getHours() < 10 && b.getMinutes() < 10){
-        return '0' + b.getHours().toString() + ":0" + b.getMinutes().toString()
-      }
-      else if (b.getHours() < 10){
-        return '0' + b.getHours().toString() + ":" + b.getMinutes().toString()
-      }
-      else if (b.getMinutes() < 10) {
-        return b.getHours().toString() + ":0" + b.getMinutes().toString()
-      }
-    }
-    return b.getHours().toString() + ":" + b.getMinutes().toString()
-  },
+  
   //设定新闻
   setArticle(result){
     let essay = []
@@ -92,7 +87,7 @@ Page({
       essay.push({
         id: result[i].id,
         title: result[i].title,
-        date: this.setTime(result[i].date),
+        date: util.setTime(result[i].date),
         source: result[i].source,
         firstImage: result[i].firstImage
       })
@@ -100,7 +95,7 @@ Page({
     this.setData({
       head_id:result[0].id,
       head_title: result[0].title,
-      head_date: this.setTime(result[0].date),
+      head_date: util.setTime(result[0].date),
       head_source: result[0].source,
       head_firstImage: result[0].firstImage,
       essay: essay

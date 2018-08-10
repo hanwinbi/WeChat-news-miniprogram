@@ -6,8 +6,7 @@
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#3CA0DC",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "white",
-    "enablePullDownRefresh": true
+    "navigationBarTitleText": "Hanwin News",
+    "navigationBarTextStyle": "white"
   }
 }
