@@ -1,10 +1,6 @@
 # WeChat-news-miniprogram
 Project that I try to built my own miniprogram
 
-项目完成效果图：
-<img src='/images/news-list.png' height="960" width="420" alt="新闻列表" align=center >
-<img src='/images/news-detail.png' height="960" width="420" alt="新闻详情" align=center >
-
 项目完成内容：
 1.主页面：包含不同分类的新闻列表。
 2.列表项内容：列表中的该新闻列表，标题、新闻源、时间
